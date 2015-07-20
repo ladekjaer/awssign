@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/ladekjaer/awssign/issues"
   },
-  "homepage": "https://github.com/ladekjaer/awssign"
+  "homepage": "https://github.com/ladekjaer/awssign",
+  "dependencies": {
+    "ini": "^1.3.4"
+  }
 }
