@@ -1,0 +1,24 @@
+{
+  "name": "awssign",
+  "version": "0.0.1",
+  "description": "Creates nessasary HTTP headers for request to the AWS API. Uses AWS4-HMAC-SHA256",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ladekjaer/awssign"
+  },
+  "keywords": [
+    "aws",
+    "aws4",
+    "aws4-hmac-sha256"
+  ],
+  "author": "Rasmus Ladekjær Pedersen (@ladekjaer)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ladekjaer/awssign/issues"
+  },
+  "homepage": "https://github.com/ladekjaer/awssign"
+}
