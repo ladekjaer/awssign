@@ -25,10 +25,10 @@ if (!aws_region) {
     aws_region = config.default.region
 }
 
-module.exports.setup = function(aws_key, awssecret, awsregion) {
-    aws_key = aws_key
-    aws_secret = awssecret
-    aws_region = awsregion
+module.exports.setup = function(awskey, awssecret, awsregion) {
+    aws_key = awskey ? awskey : aws_key
+    aws_secret = awssecret ? awssecret : aws_secret
+    aws_region = awsregion ? awsregion : aws_region
 }
 
 module.exports.signature = function(httpOptions, bodyhash) {
