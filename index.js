@@ -33,8 +33,9 @@ module.exports.setup = function(awskey, awssecret, awsregion) {
 
 module.exports.signature = function(httpOptions, bodyhash) {
     var date = timeStampISO8601()
+    bodyhash = bodyhash ? bodyhash : emptyStringHash()
     httpOptions.headers['x-amz-date'] = date
-    httpOptions.headers['x-amz-content-sha256'] = bodyhash ? bodyhash : emptyStringHash()
+    httpOptions.headers['x-amz-content-sha256'] = bodyhash
     
     var signingHeaders = createSignedHeaders(httpOptions)
     var canonicalRequest = createCanonicalRequest(httpOptions, bodyhash, signingHeaders)
