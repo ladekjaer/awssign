@@ -1,6 +1,6 @@
 {
   "name": "awssign",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Creates nessasary HTTP headers for request to the AWS API. Uses AWS4-HMAC-SHA256",
   "main": "index.js",
   "scripts": {
