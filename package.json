@@ -13,7 +13,13 @@
   "keywords": [
     "aws",
     "aws4",
-    "aws4-hmac-sha256"
+    "aws4-hmac-sha256",
+    "sign",
+    "signature",
+    "auth",
+    "authorization",
+    "authentication",
+    "s3"
   ],
   "author": "Rasmus Ladekjær Pedersen (@ladekjaer)",
   "license": "MIT",
