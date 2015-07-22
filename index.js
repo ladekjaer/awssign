@@ -3,6 +3,7 @@ var util = require('util')
 var ini = require('ini')
 var fs = require('fs')
 var path = require('path')
+var url = require('url')
 
 var SIGN_VERSION = 'AWS4-HMAC-SHA256'
 var HOME = process.env.HOME
@@ -99,12 +100,19 @@ function createScope(options, date, region) {
 function createCanonicalRequest(options, bodyhash, signingHeaders) {
     var HTTP_VERB = options.method.toUpperCase()
 
-    var canonicalQueryString = '' // THIS MUST BE CORRECTED !!!
+    var pathname = url.parse(options.path, true).pathname
+    var canonicalUri = encodeURI(pathname)
 
-    var canonicalRequest = ''
-    canonicalRequest += HTTP_VERB + '\n'
-    canonicalRequest += encodeURI(options.path) + '\n'
-    canonicalRequest += canonicalQueryString + '\n'
+    var canonicalQueryString = ''
+    var queries = url.parse(options.path, true).query
+    Object.keys(queries).sort(function(a, b) {
+        if (a.toLowerCase() > b.toLowerCase()) return 1
+        if (a.toLowerCase() < b.toLowerCase()) return -1
+        return 0
+    }).forEach(function(query) {
+        if (canonicalQueryString !== '') canonicalQueryString += '&'
+        canonicalQueryString += encodeURI(query)+'='+encodeURI(queries[query])
+    })
 
     var headers = ''
     var hostIncluded = false
@@ -119,9 +127,12 @@ function createCanonicalRequest(options, bodyhash, signingHeaders) {
         }
         headers += header.toLowerCase() + ':' + (options.headers[header] + '').trim() + '\n'
     })
-    headers += '\n'
 
-    canonicalRequest += headers
+    var canonicalRequest = ''
+    canonicalRequest += HTTP_VERB + '\n'
+    canonicalRequest += canonicalUri + '\n'
+    canonicalRequest += canonicalQueryString + '\n'
+    canonicalRequest += headers + '\n'
     canonicalRequest += signingHeaders + '\n'
     canonicalRequest += bodyhash
 
