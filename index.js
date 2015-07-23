@@ -98,7 +98,7 @@ function createScope(options, date, region) {
 }
 
 function createCanonicalRequest(options, bodyhash, signingHeaders) {
-    var HTTP_VERB = options.method.toUpperCase()
+    var HTTP_VERB = (options.method) ? options.method.toUpperCase() : 'GET'
 
     var pathname = url.parse(options.path, true).pathname
     var canonicalUri = encodeURI(pathname)
