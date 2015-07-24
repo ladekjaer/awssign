@@ -13,17 +13,21 @@ var aws_region = process.env.AWS_DEFAULT_REGION
 
 if (!aws_key || !aws_secret) {
     var credentials = path.join(HOME, '.aws/credentials')
-    credentials = fs.readFileSync(credentials, {encoding: 'utf8'})
-    credentials = ini.parse(credentials)
-    aws_key = aws_key ? aws_key : credentials.default.aws_access_key_id
-    aws_secret = aws_secret ? aws_secret : credentials.default.aws_secret_access_key
+    if (fs.existsSync(credentials)) {
+        credentials = fs.readFileSync(credentials, {encoding: 'utf8'})
+        credentials = ini.parse(credentials)
+        aws_key = aws_key ? aws_key : credentials.default.aws_access_key_id
+        aws_secret = aws_secret ? aws_secret : credentials.default.aws_secret_access_key
+    }
 }
 
 if (!aws_region) {
     var config = path.join(HOME, '.aws/config')
-    config = fs.readFileSync(config, {encoding: 'utf8'})
-    config = ini.parse(config)
-    aws_region = config.default.region
+    if (fs.existsSync(config)) {
+        config = fs.readFileSync(config, {encoding: 'utf8'})
+        config = ini.parse(config)
+        aws_region = config.default.region
+    }
 }
 
 module.exports.setup = function(awskey, awssecret, awsregion) {
