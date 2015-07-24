@@ -3,7 +3,7 @@ Creates nessasary HTTP headers for request to the AWS API. Uses AWS4-HMAC-SHA256
 
 Given the options object to be passed to https.request(options, callback) [awssign](https://github.com/ladekjaer/awssign) ands the following headers x-amz-date, x-amz-content-sha256 and authorization.
 
-Credentials and region will be looked for in environment variables and secondary in ~/.aws/credentials and ~/.aws.config.
+Credentials and region will be looked for in environment variables and secondary in ~/.aws/credentials and ~/.aws.config. For IAM Role see below.
 
 ## Install
 ```
@@ -56,6 +56,19 @@ Credentials and region can be overwritten with
 awssign.setup(aws_key, aws_secret, aws_region)
 ```
 Pass null for values not to be overridden.
+
+### IAM Role
+If awssign is used from an EC2 instance with an IAM Role is can get the credentials from there. Just remember to set the IAM role and the S3 region.
+``` js
+awssign.setup(null, null, region)
+
+awssign.iamrole(iam_role, function(err, res) {
+    awssign.signature(options, bodyhash)
+    var req = https.request(options, function(res) {
+        ...
+    })
+})
+```
 
 ## License
 
